@@ -58,7 +58,7 @@ else:
                     }])
                     # Combinar y guardar
                     df_final = pd.concat([df_actual, nueva_cita], ignore_index=True)
-                    conn.update(spreadsheet=URL_SHEET, data=df_final)
+                    conn.update(data=df_final)
                     st.success("✅ ¡Guardado en Google Sheets!")
                 else:
                     st.error("Faltan datos")
@@ -70,6 +70,7 @@ else:
             st.data_editor(df, use_container_width=True)
         else:
             st.info("No hay citas.")
+
 
 
 
