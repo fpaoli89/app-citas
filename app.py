@@ -97,7 +97,7 @@ else:
                     df_final = df_final[["cliente", "telefono", "fecha", "hora", "servicio"]]
                     
                     # 5. Actualizar Google Sheets
-                    conn.update(data=df_final)
+                    conn.update(spreadsheet=URL_SHEET, data=df_final
                     
                     st.success(f"✅ ¡Cita de {nombre} guardada!")
                     st.balloons()
@@ -125,3 +125,4 @@ else:
             )
         else:
             st.info("No hay citas registradas todavía.")
+
