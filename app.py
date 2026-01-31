@@ -26,7 +26,7 @@ st.markdown(f"""
         color: white;
     }}
     </style>
-    """, unsafe_content_type=True)
+    """, unsafe_allow_html=True)
 
 # --- LÓGICA DE BASE DE DATOS ---
 def conectar_db():
@@ -134,4 +134,5 @@ with tab3:
             # Aquí podrías programar borrar citas de fechas anteriores
             st.warning("Función de limpieza en desarrollo.")
     else:
+
         st.write("No hay datos para mostrar.")
