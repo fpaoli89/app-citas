@@ -9,7 +9,7 @@ NOMBRE_NEGOCIO = "Lo del Fer"
 COLOR_PRIMARIO = "#E91E63"
 PASSWORD_CORRECTA = "admin2024"
 # PEGA AQUÍ LA URL DE TU GOOGLE SHEET
-URL_SHEET = "TU_URL_DE_GOOGLE_SHEETS_AQUÍ" 
+URL_SHEET = "https://docs.google.com/spreadsheets/d/1OBbIxv645l674Fkw57LdBa5DIEHBLXnf47w1RK7fs8k/edit?gid=0#gid=0" 
 
 st.set_page_config(page_title=NOMBRE_NEGOCIO, page_icon="✨")
 
@@ -70,4 +70,5 @@ else:
             st.data_editor(df, use_container_width=True)
         else:
             st.info("No hay citas.")
+
 
