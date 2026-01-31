@@ -17,7 +17,7 @@ st.set_page_config(page_title=NOMBRE_NEGOCIO, page_icon="✨")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 def leer_datos():
-    return conn.read(spreadsheet=URL_SHEET, usecols=[0,1,2,3,4])
+   return conn.read(ttl=0)
 
 def generar_link_whatsapp(fila):
     tel = "".join(filter(str.isdigit, str(fila['telefono'])))
@@ -70,5 +70,6 @@ else:
             st.data_editor(df, use_container_width=True)
         else:
             st.info("No hay citas.")
+
 
 
