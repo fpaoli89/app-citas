@@ -6,7 +6,7 @@ import urllib.parse
 
 # --- CONFIGURACIÓN DE MARCA Y PÁGINA ---
 # Personaliza estos valores para tu cliente
-NOMBRE_NEGOCIO = "Studio Glam & Salud" 
+NOMBRE_NEGOCIO = "Lo del Fer" 
 COLOR_PRIMARIO = "#E91E63" # Un rosado elegante, puedes cambiarlo
 
 st.set_page_config(
@@ -136,3 +136,4 @@ with tab3:
     else:
 
         st.write("No hay datos para mostrar.")
+
