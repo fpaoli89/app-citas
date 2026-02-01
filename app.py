@@ -93,13 +93,8 @@ else:
             
             if st.form_submit_button("Guardar Cita"):
                 if nombre and tel:
-                    # 1. Obtener datos actuales limpios
                     df_actual = leer_datos()
-                    
-                    # 2. Limpiar el teléfono ingresado (quitar .0 si se coló)
                     tel_final = str(tel).replace(".0", "")
-                    
-                    # 3. Crear nueva fila
                     nueva_cita = pd.DataFrame([{
                         "cliente": nombre, 
                         "telefono": tel_final, 
@@ -107,44 +102,35 @@ else:
                         "hora": str(hora), 
                         "servicio": servicio
                     }])
-                    
-                    # 4. Combinar y asegurar orden de columnas
                     df_final = pd.concat([df_actual, nueva_cita], ignore_index=True)
                     df_final = df_final[["cliente", "telefono", "fecha", "hora", "servicio"]]
-                    
-                    # 5. Forzar a que la columna teléfono sea texto para el Excel
                     df_final['telefono'] = df_final['telefono'].astype(str)
                     
-                    # 6. Actualizar Google Sheets
                     conn.update(spreadsheet=URL_SHEET, data=df_final)
-                    
                     st.success(f"✅ ¡Cita de {nombre} guardada!")
                     st.balloons()
                 else:
                     st.warning("⚠️ Completa nombre y teléfono.")
 
-with tab2:
+    with tab2:
         st.subheader("📅 Próximas Citas")
         df_agenda = leer_datos()
         
         if not df_agenda.empty:
-            # Filtramos filas vacías y ordenamos por fecha/hora
+            # Limpiar y ordenar
             df_agenda = df_agenda[df_agenda['cliente'].notna()]
             df_agenda = df_agenda.sort_values(by=['fecha', 'hora'])
 
-            # En lugar de una tabla rígida, creamos "tarjetas" para cada cliente
+            # Diseño de tarjetas para móvil
             for index, fila in df_agenda.iterrows():
                 with st.container(border=True):
                     col_info, col_btn = st.columns([3, 1])
-                    
                     with col_info:
                         st.markdown(f"**👤 {fila['cliente']}**")
                         st.caption(f"📅 {fila['fecha']} a las {fila['hora']} — ✂️ {fila['servicio']}")
-                    
                     with col_btn:
-                        # Generamos el link de WhatsApp
                         link_wa = generar_link_whatsapp(fila)
-                        # Botón estilizado que abre WhatsApp
-                        st.link_button("📲 Avisar", link_wa, type="secondary")
+                        st.link_button("📲 Avisar", link_wa)
         else:
             st.info("No hay citas registradas todavía.")
+
