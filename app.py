@@ -24,7 +24,15 @@ st.markdown(f"""
     }}
     </style>
     """, unsafe_allow_html=True)
-
+st.markdown("""
+        <style>
+        div[data-testid="stBaseButton-secondary"] {
+            background-color: #25D366 !important;
+            color: white !important;
+            border: none;
+        }
+        </style>
+    """, unsafe_allow_html=True)
 # --- CONEXIÓN A GOOGLE SHEETS ---
 conn = st.connection("gsheets", type=GSheetsConnection)
 
@@ -115,31 +123,28 @@ else:
                 else:
                     st.warning("⚠️ Completa nombre y teléfono.")
 
-    with tab2:
-        st.subheader("Agenda de Turnos")
+with tab2:
+        st.subheader("📅 Próximas Citas")
         df_agenda = leer_datos()
         
-        # Eliminar filas vacías
-        df_agenda = df_agenda[df_agenda['cliente'].notna()]
-
         if not df_agenda.empty:
-            # Crear columna de WhatsApp con el link limpio
-            df_agenda['WhatsApp'] = df_agenda.apply(generar_link_whatsapp, axis=1)
-            
-            # Ordenar por fecha y hora
+            # Filtramos filas vacías y ordenamos por fecha/hora
+            df_agenda = df_agenda[df_agenda['cliente'].notna()]
             df_agenda = df_agenda.sort_values(by=['fecha', 'hora'])
-            
-            st.data_editor(
-                df_agenda,
-                column_config={
-                    "WhatsApp": st.column_config.LinkColumn("Enviar", display_text="📲 Avisar"),
-                    "fecha": "Día",
-                    "hora": "Hora"
-                },
-                hide_index=True,
-                use_container_width=True
-            )
+
+            # En lugar de una tabla rígida, creamos "tarjetas" para cada cliente
+            for index, fila in df_agenda.iterrows():
+                with st.container(border=True):
+                    col_info, col_btn = st.columns([3, 1])
+                    
+                    with col_info:
+                        st.markdown(f"**👤 {fila['cliente']}**")
+                        st.caption(f"📅 {fila['fecha']} a las {fila['hora']} — ✂️ {fila['servicio']}")
+                    
+                    with col_btn:
+                        # Generamos el link de WhatsApp
+                        link_wa = generar_link_whatsapp(fila)
+                        # Botón estilizado que abre WhatsApp
+                        st.link_button("📲 Avisar", link_wa, type="secondary")
         else:
-            st.info("No hay citas registradas.")
-
-
+            st.info("No hay citas registradas todavía.")
