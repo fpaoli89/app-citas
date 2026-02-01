@@ -9,7 +9,7 @@ NOMBRE_NEGOCIO = "Lo del Fer"
 COLOR_PRIMARIO = "#E91E63"
 PASSWORD_CORRECTA = "admin2024"
 # Asegúrate de que esta URL sea la de tu Excel
-URL_SHEET = "https://docs.google.com/spreadsheets/d/streamlit-citas@app-citas-486023.iam.gserviceaccount.com/edit"
+URL_SHEET = "https://docs.google.com/spreadsheets/d/1OBbIxv645l674Fkw57LdBa5DIEHBLXnf47w1RK7fs8k/edit?gid=0#gid=0/edit"
 
 st.set_page_config(page_title=NOMBRE_NEGOCIO, page_icon="✂️", layout="centered")
 
@@ -141,4 +141,5 @@ else:
             )
         else:
             st.info("No hay citas registradas.")
+
 
